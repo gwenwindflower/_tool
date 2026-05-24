@@ -30,28 +30,44 @@ When in doubt, prefer to update the org-level defaults over forking them per rep
 
 ## How we plan and track work
 
-This project uses the **POT (Phases > Objectives > Tasks)** system. The full spec lives in the user's rules at `~/.agents/rules/collaborating-on-task-lists.md`; the summary below is enough to be productive.
-
-| Level | Markdown | Role | Execution |
-| --- | --- | --- | --- |
-| **Phase** | `## Phase N: description` | Sequential project checkpoint | Serial — finish one before starting the next |
-| **Objective** | `### description` | Declarative goal (well-scoped, like a PR) | Parallel within a Phase — safe to assign to subagents |
-| **Task** | `- [ ] description` | Imperative step inside an Objective | Sequential within an Objective |
-
-**Status markers on Phases:** 🌀 active, ✅ completed, no marker = unstarted. Only one Phase active at a time.
+This project uses the **SPOT (Spec, Phases, Objectives, Tasks)** system. The full spec lives in the user's rules at `~/.agents/rules/projects.md` and the `spot-project-management` skill; the summary below is enough to be productive.
 
 **Files:**
 
-- `TODO.md` — active and upcoming work. The current Phase is at the top; Backlog at the bottom.
-- `WORKLOG.md` — completed Phases in **reverse-chronological** order, with implementation notes, decisions, and ADR-style context where useful.
+| File | Scope | Job |
+| --- | --- | --- |
+| `SPEC.md` | Project | What we're building and why; indexes the domain specs |
+| `specs/<dom>-<slug>.md` | Domain | Durable per-domain requirements with stable IDs |
+| `TODO.md` | Project | Active work; each Phase lists the requirement IDs it must satisfy |
+| `DONE.md` | Project | Shipped work, with rationale |
+| `docs/` | Project | How the system works *now* |
 
-**The lifecycle:** when a Phase is done, (1) update its language to reflect what actually shipped, (2) mark it ✅, (3) move it to the *top* of `WORKLOG.md` with notes, (4) delete it from `TODO.md`.
+**Hierarchy:**
+
+| Level | Markdown | Role | Execution |
+| --- | --- | --- | --- |
+| **Phase** | `## Phase N: description` + optional `**Dependencies**:` / `**Requirements**:` lines | Checkpoint, sized for one team's worth of work | Parallel where independent; sequenced where dependencies declare it |
+| **Objective** | `### description` | Declarative goal (well-scoped, like a PR) | Parallel within a Phase — one subagent's lane |
+| **Task** | `- [ ] description` | Imperative step inside an Objective | Sequential within an Objective |
+
+**Status markers on Phases:** 🌀 active, ✅ completed, no marker = unstarted. Multiple Phases may be 🌀 at once when none of them blocks another. Phase numbers are stable IDs, not sequence — order between Phases comes from the `**Dependencies**:` line.
+
+**Phase metadata:** the header carries up to two optional lines, in this order:
+
+- `**Dependencies**: <N>, <N>, ...` — bare Phase numbers this Phase depends on. Omit when empty. A Phase is **unblocked** once every listed dependency is fully promoted to DONE.
+- `**Requirements**: <id>, <id>, ...` — IDs from `SPEC.md` (`R<NNN>`) or domain specs (`<dom>-R<NNN>`, e.g. `cli-R007`). Manager treats this as the focus checklist: every Task done **and** every listed requirement met before the Phase moves to DONE. IDs are soft-immutable — never reused once retired.
+
+**Task lifecycle:** when a Task is finished, (1) remove the unchecked bullet from `TODO.md`, (2) add it to its Objective in `DONE.md` with the box checked, (3) optionally append indented sub-bullets — decisions, gotchas, links, why a non-obvious approach was taken. **Never edit the original Task text** — the historical record stays honest, planned vs. actually-shipped side by side.
+
+**Roles:** Planner owns *what* (specs and TODO). Manager owns *execution* (coordinates a Phase, moves it to DONE). Subagent owns one Objective and commits — never rebases.
 
 **A few rules that matter:**
 
+- **When TODO and a spec disagree, the spec wins.** Flag the mismatch.
 - `#user`-tagged items are for the human (deploys, manual installs, account changes). Don't attempt them — if one blocks you, **stop and alert the user**.
-- Don't commit pure `TODO.md` or `WORKLOG.md` updates — fold them into the substantive commit. If a subagent leaves a `docs(todo): ...` commit, squash it.
-- Backlog items are not active work. Don't start them without user approval to promote into a Phase.
-- If wording is ambiguous, an approach feels risky, or a task looks low-value — pause, flag it, agree on the change, persist to `TODO.md`, *then* do the work.
+- **Subagents commit, never rebase.** Manager folds bookkeeping into substantive commits (checking off a Task is a fixup into the subagent's commit, not a standalone commit).
+- **Phase boundary is a hard checkpoint.** Last Phase fully promoted to DONE and committed before the next starts on the same thread of work.
+- **Spec-only commits should be rare.** Use `chore(specs)` only when the change carries something a future reader can't get from the surrounding behavior commits (e.g. threading a learning back into specs after a Phase).
+- If wording is ambiguous, an approach feels risky, or a task looks low-value — pause, flag it, agree on the change, persist to the spec or `TODO.md`, *then* do the work.
 
-See the existing entries in `TODO.md` and `WORKLOG.md` for shape — they're written as worked examples for a fresh project.
+See the existing entries in `SPEC.md`, `specs/`, `TODO.md`, and `DONE.md` for shape — they're written as worked examples for a fresh project.

@@ -16,6 +16,10 @@ Never run `release`, `release:push`, or `release:create`. They push commits and 
 
 `version:read` reports the version's single source of truth. Never hand-edit the files it derives; report drift with `version:check` and repair it with `version:sync`. `version:bump` belongs to a release, not to ordinary work.
 
+## Hooks guard commits, tasks guard merges
+
+prek runs file hygiene on every commit (staged files only) and rejects commit subjects git-cliff cannot parse; `mise run hooks:install` wires it into a fresh clone. `wt merge` runs `lint:*` before the squash and `release:check` after the rebase. Never commit with `--no-verify`; fix what the hook reports.
+
 ## Workflow changes
 
 Every `uses:` under `.github/workflows/` stays pinned to a commit SHA with a trailing version comment, and every change passes `mise run ci-audit`.

@@ -29,7 +29,7 @@ The template is language-neutral. A kit (installed by the `bootstrap-tool` skill
 | Task | Contract |
 | --- | --- |
 | `build` | Produce the release binary at `dist/bin/@@TOOL_BINARY@@` for the host target. |
-| `lint:*` | Every formatter and linter, each as its own task; CI runs `mise run 'lint:*'`. |
+| `lint:*` | Every semantic linter as its own task (formatters belong in `prek.toml`); CI runs `mise run 'lint:*'`. |
 | `test:*` | Every test suite; CI runs `mise run 'test:*'` on Linux and macOS. |
 | `version:read` | Print the declared version (`1.2.3`) and nothing else. Executable at `mise-tasks/version/read`. |
 | `version:write <version>` | Set the declared version and rewrite every file derived from it. |
@@ -38,12 +38,16 @@ The template is language-neutral. A kit (installed by the `bootstrap-tool` skill
 
 Release archives are named `<name>-<target>-v<version>.tgz` with Rust-style target triples for every language (`aarch64-apple-darwin`, `x86_64-apple-darwin`, `aarch64-unknown-linux-gnu`, `x86_64-unknown-linux-gnu`). The build matrix in `release-build.yml` maps runners to those triples; `build` only ever compiles for its host.
 
+## Hooks
+
+`prek.toml` holds every per-commit check: builtin hygiene, markdownlint, shellcheck, zizmor on workflows, and the `commit-msg` Conventional Commit check in `scripts/check-commit-message`. Kits add language hooks at the `LANG_HOOKS` marker. `.config/wt.toml` runs `lint:*` before a `wt merge` squash and `release:check` after the rebase. Keep whole-repo work out of `prek.toml` and formatters out of `wt.toml`.
+
 ## Provisioning
 
 In order. Steps marked `#user` need the account owner.
 
 1. `#user` `gh repo create <owner>/<name> --template gwenwindflower/_tool --public --clone`, then commit the filled placeholders and push `main`.
-2. `mise trust && mise install`, then `pinact run -update` and `mise use git-cliff@latest pinact@latest zizmor@latest` to refresh pins the template carries.
+2. `mise trust && mise install`, then `pinact run -update` and `mise use git-cliff@latest pinact@latest zizmor@latest prek@latest` to refresh pins the template carries, and `mise run hooks:install`.
 3. `mise run repo:settings --description "<one line>" --topics "<a,b,c>"` (add `--homebrew` for a standalone CLI that should publish to the tap).
 4. `mise run repo:labels`.
 5. `#user` Ensure `<owner>/.github` exists with `CONTRIBUTING.md` and `SECURITY.md`; the issue forms, PR template, and README link to them.

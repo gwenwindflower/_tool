@@ -17,10 +17,10 @@ trap 'rm -rf "$checksums"' EXIT
 gh release download "$tag" --repo "$repo" --pattern '*.tgz.sha256' --dir "$checksums"
 
 formula="$(cat .github/homebrew/formula.rb.tmpl)"
-formula="${formula//@@CLASS@@/$class}"
-formula="${formula//@@DESCRIPTION@@/$description}"
-formula="${formula//@@REPO@@/$repo}"
-formula="${formula//@@VERSION@@/$version}"
+formula="${formula//%%CLASS%%/$class}"
+formula="${formula//%%DESCRIPTION%%/$description}"
+formula="${formula//%%REPO%%/$repo}"
+formula="${formula//%%VERSION%%/$version}"
 
 for target in aarch64-apple-darwin x86_64-apple-darwin aarch64-unknown-linux-gnu x86_64-unknown-linux-gnu; do
 	asset="${name}-${target}-v${version}.tgz"
@@ -29,8 +29,8 @@ for target in aarch64-apple-darwin x86_64-apple-darwin aarch64-unknown-linux-gnu
 		printf 'No checksum uploaded for %s\n' "$asset" >&2
 		exit 1
 	}
-	formula="${formula//@@URL:${target}@@/https://github.com/${repo}/releases/download/${tag}/${asset}}"
-	formula="${formula//@@SHA:${target}@@/$sha}"
+	formula="${formula//%%URL:${target}%%/https://github.com/${repo}/releases/download/${tag}/${asset}}"
+	formula="${formula//%%SHA:${target}%%/$sha}"
 done
 
 mkdir -p dist/Formula

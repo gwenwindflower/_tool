@@ -57,8 +57,8 @@ body:
     id: env
     attributes:
       label: Environment
-      description: OS, shell, and anything else that might be relevant (Deno/Node/Go version, terminal emulator, etc.).
-      placeholder: e.g. macOS 15.2, fish 3.7, Deno 2.1
+      description: OS, shell, and anything else that might be relevant (runtime or toolchain version, terminal emulator, etc.).
+      placeholder: e.g. macOS 15, fish 4.0, @@TOOL_BINARY@@ 0.1.0
     validations:
       required: true
 

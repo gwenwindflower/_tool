@@ -1,7 +1,4 @@
-# Stack-agnostic baseline. Extend this per-tool — Deno, Go, Node, Rust, etc.
-# all add their own ignores on top. Keep this section tight.
-
-# ── Secrets & local config ─────────────────────────────────────────────
+# Secrets and local config
 .env
 .env.*
 !.env.example
@@ -9,40 +6,30 @@
 *.key
 *.p12
 *.pfx
-id_rsa
-id_ed25519
 secrets/
 credentials/
 
-# ── OS cruft ───────────────────────────────────────────────────────────
+# OS
 .DS_Store
 Thumbs.db
-desktop.ini
 
-# ── Editor & IDE ───────────────────────────────────────────────────────
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.netrwhist
 
-# ── Logs & temp ────────────────────────────────────────────────────────
+# Logs and scratch
 *.log
-.cache/
 tmp/
-.tmp/
+dist/
 
-# ── Local agent / tooling state ────────────────────────────────────────
-# Keep agent CONTEXT files (AGENTS.md, .claude/skills, etc.) tracked.
-# Ignore only ephemeral local state.
+# Local agent state (AGENTS.md and .agents/ stay tracked)
 .claude/settings.local.json
-.opencode/settings.local.json
+.claude/.cc-writes/
+.codex/*.local.toml
+.mise.local.toml
+mise.local.toml
 
-# ── Stack-specific ─────────────────────────────────────────────────────
-# Add ignores for the language(s) and frameworks this tool actually uses.
-# Examples:
-#   Deno:   /bin/  (compiled binaries)
-#   Node:   node_modules/  .pnp/  *.tsbuildinfo
-#   Go:     /dist/  *.test  *.out  vendor/
-#   Rust:   /target/  Cargo.lock  (binaries only)
+# >>> LANG_IGNORES <<<

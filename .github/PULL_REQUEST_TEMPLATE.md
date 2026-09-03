@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 <!--
   Thanks for the PR! A few quick notes:
 
@@ -34,5 +35,5 @@
 
 - [ ] PR title follows [Conventional Commits](https://www.conventionalcommits.org/) (`type(scope): subject`).
 - [ ] Tests added or updated where it made sense (new behavior, bug fixes, regressions).
-- [ ] Docs updated where it made sense (README, AGENTS.md, CLI help text, CHANGELOG).
+- [ ] Docs updated where it made sense (README, AGENTS.md, CLI help text).
 - [ ] I've read [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) and this PR fits the design principles.

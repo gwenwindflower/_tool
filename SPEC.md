@@ -1,39 +1,26 @@
-# {{TOOL_NAME}} — Spec
+# {{TOOL_NAME}}
 
-<!--
-  SPEC.md is the project-level entry point for *what we're building and why*.
-  It indexes the domain specs (`specs/<dom>-<slug>.md`) and carries any
-  cross-cutting project-level requirements.
+## Goals
 
-  Requirement IDs are stable, soft-immutable identifiers:
-    - Project-level: `R<NNN>` (e.g. `R001`)
-    - Domain-level: `<dom>-R<NNN>` (e.g. `sk-R007`)
-  Never reuse an ID once retired.
+{{THREE_TO_EIGHT_SENTENCES: what the tool does, for whom, and the goals it serves. State the non-goals explicitly; they prevent helpful drift.}}
 
-  When SPEC and TODO disagree, the spec wins. Update the spec first;
-  point TODO at the new IDs.
--->
+## Vocabulary
 
-## What we're building
-
-{{ONE_OR_TWO_PARAGRAPHS_ON_THE_TOOL_AND_THE_USER_PROBLEM_IT_SOLVES}}
-
-## Why
-
-{{ONE_OR_TWO_PARAGRAPHS_ON_THE_MOTIVATION_AND_OUTCOMES_THIS_TOOL_DELIVERS}}
+{{OPTIONAL: glossary of load-bearing domain terms, or a pointer to docs/. Delete the section if the vocabulary is obvious.}}
 
 ## Domain specs
 
-Each durable domain gets its own file under `specs/`. Cross-link from here so
-future readers (and Planners) find them.
+- @specs/dev-release.md
+- @specs/xx-example.md
 
-| Domain | Prefix | Spec |
-| --- | --- | --- |
-| {{DOMAIN_NAME}} | `{{dom}}` | [`specs/{{dom}}-{{slug}}.md`](./specs/{{dom}}-{{slug}}.md) |
+## Requirements
 
-## Project-level requirements
+Project-scope requirements that belong to no single domain.
 
-Cross-cutting requirements that don't belong to a single domain.
+- **R001** — {{ONE_SENTENCE_REQUIREMENT}}
 
-- **R001** — {{ONE_LINE_REQUIREMENT_DESCRIPTION}}
-- **R002** — {{ONE_LINE_REQUIREMENT_DESCRIPTION}}
+## Backlog
+
+Future requirements, open questions, big ideas. Promote into a spec or delete.
+
+- {{IDEA}}

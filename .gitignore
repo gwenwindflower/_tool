@@ -33,3 +33,4 @@ dist/
 mise.local.toml
 
 # >>> LANG_IGNORES <<<
+.rumdl_cache/

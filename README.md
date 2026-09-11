@@ -52,6 +52,8 @@ mise tasks                   # every task with its description
 mise run check               # the same gate CI runs
 ```
 
+Already have some of those tools on your `PATH`? Copy `mise.local.toml.example` to `mise.local.toml` (gitignored) and list them under `disable_tools`. mise then skips installing them here and tasks use whatever `command -v` finds; CI still installs the versions `mise.toml` pins, so keep yours close.
+
 Releases run from `main` through `mise run release`; `mise run release:rehearse` is the side-effect-free dry run.
 
 ## Issues vs. Discussions

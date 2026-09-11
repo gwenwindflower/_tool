@@ -24,7 +24,7 @@ rg -n '@@[A-Z_]+@@' --glob '!docs/bootstrap.md'
 
 ## Language kit
 
-The template is language-neutral. A kit (installed by the `bootstrap-tool` skill) adds the toolchain to `mise.toml` at the `LANG_TOOLS` and `LANG_TASKS` markers, appends ignore rules at `LANG_IGNORES` in `.gitignore`, and provides these tasks:
+The template is language-neutral. A kit (installed by the `bootstrap-tool` skill) adds language tooling to `mise.toml` at the `LANG_TOOLS` and `LANG_TASKS` markers, appends ignore rules at `LANG_IGNORES` in `.gitignore`, and provides these tasks:
 
 | Task | Contract |
 | --- | --- |
@@ -35,6 +35,8 @@ The template is language-neutral. A kit (installed by the `bootstrap-tool` skill
 | `version:write <version>` | Set the declared version and rewrite every file derived from it. |
 | `version:files` | Print, one per line, every file `version:write` may touch. |
 | `version:verify` | Optional. Exit non-zero when a derived file disagrees with the declared version. |
+
+The language toolchain itself is never a mise tool. It lives on `PATH` through the language's own manager (rustup for Rust, declared by `rust-toolchain.toml`), and CI uses the runner image's copy. `mise.toml` declares only the linters, release tooling, and language-adjacent binaries the project adds.
 
 Release archives are named `<name>-<target>-v<version>.tgz` with Rust-style target triples for every language (`aarch64-apple-darwin`, `x86_64-apple-darwin`, `aarch64-unknown-linux-gnu`, `x86_64-unknown-linux-gnu`). The build matrix in `release-build.yml` maps runners to those triples; `build` only ever compiles for its host.
 

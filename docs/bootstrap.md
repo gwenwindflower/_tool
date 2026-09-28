@@ -49,7 +49,7 @@ Release archives are named `<name>-<target>-v<version>.tgz` with Rust-style targ
 In order. Steps marked `#user` need the account owner.
 
 1. `#user` `gh repo create <owner>/<name> --template gwenwindflower/_tool --public --clone`, then commit the filled placeholders and push `main`.
-2. `mise trust && mise install`, then `pinact run -update` and `mise run hooks:install`. The bootstrap writes `mise.local.toml` disabling every declared tool, because the core set is installed globally; delete lines for tools this machine lacks.
+2. `mise trust && mise install`, then `pinact run --update` and `mise run hooks:install`. The bootstrap writes `mise.local.toml` disabling every declared tool, because the core set is installed globally; delete lines for tools this machine lacks.
 3. `mise run repo:settings --description "<one line>" --topics "<a,b,c>"` (add `--homebrew` for a standalone CLI that should publish to the tap).
 4. `mise run repo:labels`.
 5. `#user` Ensure `<owner>/.github` exists with `CONTRIBUTING.md` and `SECURITY.md`; the issue forms, PR template, and README link to them.

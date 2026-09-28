@@ -18,7 +18,7 @@ Never run `release`, `release:push`, or `release:create`. They push commits and 
 
 ## Hooks guard commits, tasks guard merges
 
-prek runs file hygiene on every commit (staged files only) and rejects commit subjects git-cliff cannot parse; `mise run hooks:install` wires it into a fresh clone. `wt merge` runs `lint:*` before the squash and `release:check` after the rebase. Never commit with `--no-verify`; fix what the hook reports.
+prek runs file hygiene on every commit (staged files only) and rejects commit subjects git-cliff cannot parse; `mise run hooks:install` wires it into a fresh clone. `wt merge` runs one gate after the rebase: `release:check` into the default branch, `check` into any other. Never commit with `--no-verify`; fix what the hook reports.
 
 ## Workflow changes
 

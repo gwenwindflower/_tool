@@ -19,4 +19,4 @@ Every release is cut from a clean `main` by a human-gated pipeline that a contri
 - **dev-R011** — When the `HOMEBREW_TAP` repository variable is `true`, publishing a release rewrites the formula in the tap from the release's checksums.
 - **dev-R012** — Always: `mise run release:rehearse` runs every read-only step of the release and writes nothing.
 - **dev-R013** — Always: every commit passes the prek hooks on its staged files, and a subject git-cliff cannot parse is rejected at commit time.
-- **dev-R014** — When a branch merges through `wt merge`, `lint:*` runs before the squash and `release:check` after the rebase; either failing aborts the merge.
+- **dev-R014** — When a branch merges through `wt merge`, one gate runs after the rebase, `release:check` when the target is the default branch and `check` otherwise; a failure aborts the merge.

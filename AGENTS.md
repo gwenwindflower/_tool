@@ -10,6 +10,8 @@ Task scripts live in `mise-tasks/`, grouped into directories that become the `ve
 
 `depends` runs in parallel, so order-sensitive steps belong in a sequential `run` array. `deny_net` and `deny_write` are honored only on TOML tasks.
 
+Prefer the language's conventions over the template's directory layout. Adapt build, packaging, and workflow artifact paths together; for Rust, package directly from `target/release` rather than copying binaries into `dist/bin`. Keep `dist/` where it is conventional or useful for release archives.
+
 ## Releases are human-gated
 
 Never run `release`, `release:push`, or `release:create`. They push commits and create public GitHub releases behind mise `confirm` gates that default to no. `release:rehearse` is the dry run: it exercises every read-only step and prints the notes that would ship. Run it when the project looks ready, report what it says, and stop.

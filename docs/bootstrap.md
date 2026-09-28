@@ -28,13 +28,15 @@ The template is language-neutral. A kit adds language tooling to `mise.toml` at 
 
 | Task | Contract |
 | --- | --- |
-| `build` | Produce the release binary at `dist/bin/@@TOOL_BINARY@@` for the host target. |
+| `build` | Produce the release binary for the host target in the language's conventional output directory. |
 | `lint:*` | Every semantic linter as its own task (formatters belong in `prek.toml`); CI runs `mise run 'lint:*'`. |
 | `test:*` | Every test suite; CI runs `mise run 'test:*'` on Linux and macOS. |
 | `version:read` | Print the declared version (`1.2.3`) and nothing else. Executable at `mise-tasks/version/read`. |
 | `version:write <version>` | Set the declared version and rewrite every file derived from it. |
 | `version:files` | Print, one per line, every file `version:write` may touch. |
 | `version:verify` | Optional. Exit non-zero when a derived file disagrees with the declared version. |
+
+Adapt the kit and template tasks to the language's conventions. For Rust, let `build` leave the binary in `target/release` and change the input path in `mise-tasks/release/package` to match. Do not copy binaries to `dist/bin` solely to match the template. `dist/` can remain the release archive directory; if that changes too, update the workflow upload and publishing paths together.
 
 The language toolchain itself is never a mise tool. It lives on `PATH` through the language's own manager (rustup for Rust, declared by `rust-toolchain.toml`), and CI uses the runner image's copy. `mise.toml` declares only the linters, release tooling, and language-adjacent binaries the project adds.
 

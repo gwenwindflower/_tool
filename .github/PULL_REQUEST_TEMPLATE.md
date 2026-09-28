@@ -4,8 +4,7 @@
 
   - Title must follow Conventional Commits: `type(scope): subject` (e.g. `feat(cli): add --json flag`).
     The PR title becomes the squash-commit subject, so keep it under ~70 chars and in the imperative mood.
-  - For new contributors, GitHub Actions require manual approval before they run. Expect a short wait
-    while a maintainer triages — this is spam control, not a judgment of you.
+  - PRs are open to invited collaborators only. If you'd like to collaborate, start a Discussion first.
   - See CONTRIBUTING.md for the full PR process, commit style, and design principles.
 -->
 

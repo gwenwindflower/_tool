@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Apply the standard GitHub repository settings: squash or rebase merges only, linear-friendly defaults, no wiki or projects"
+#MISE description="Apply the standard GitHub repository settings: squash or rebase merges only, linear-friendly defaults, collaborator-only PRs, no wiki or projects"
 #USAGE flag "--description <text>" help="Repository description"
 #USAGE flag "--topics <list>" help="Comma-separated topics to add"
 #USAGE flag "--homebrew" help="Publish to the Homebrew tap on release (sets the HOMEBREW_TAP variable)"
@@ -28,6 +28,7 @@ if [[ -n "${usage_topics:-}" ]]; then
 fi
 
 gh repo edit "$repo" "${args[@]}"
+gh api --method PATCH "repos/$repo" -f pull_request_creation_policy=collaborators_only >/dev/null
 
 if [[ "${usage_homebrew:-false}" == true ]]; then
 	gh variable set HOMEBREW_TAP --repo "$repo" --body true

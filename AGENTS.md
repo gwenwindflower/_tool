@@ -24,6 +24,8 @@ prek runs file hygiene on every commit (staged files only) and rejects commit su
 
 Every `uses:` under `.github/workflows/` stays pinned to a commit SHA with a trailing version comment, and every change passes `mise run ci-audit`.
 
+Publishing jobs use `environment: release`. Registry trusted publishers bind the repository, workflow filename, and environment; grant `id-token: write` only to jobs that use OIDC.
+
 ## Planning
 
 This project uses SPOT: `SPEC.md` and `specs/` hold requirements with stable IDs, `TODO.md` holds active Phases, `DONE.md` is the ledger of shipped work. The `projects` rule and the `spot-project-management` skill define the system. Commit bodies carry `Completes <Objective> in Phase N` and `Closes Phase N` lines after any body bullets and before trailers.

@@ -20,3 +20,4 @@ Every release is cut from a clean `main` by a human-gated pipeline that a contri
 - **dev-R012** — Always: `mise run release:rehearse` runs every read-only step of the release and writes nothing.
 - **dev-R013** — Always: every commit passes the prek hooks on its staged files, and a subject git-cliff cannot parse is rejected at commit time.
 - **dev-R014** — When a branch merges through `wt merge`, one gate runs after the rebase, `release:check` when the target is the default branch and `check` otherwise; a failure aborts the merge.
+- **dev-R015** — Always: publishing jobs use the `release` environment; registry trusted publishers bind the repository, publishing workflow, and environment, with `id-token: write` granted only to jobs that use OIDC.

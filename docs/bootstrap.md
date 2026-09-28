@@ -51,14 +51,20 @@ In order. Steps marked `#user` need the account owner.
 1. `#user` `gh repo create <owner>/<name> --template gwenwindflower/_tool --public --clone`, then commit the filled placeholders and push `main`.
 2. `mise trust && mise install`, then `pinact run --update` and `mise run hooks:install`. The bootstrap writes `mise.local.toml` disabling every declared tool, because the core set is installed globally; delete lines for tools this machine lacks.
 3. `mise run repo:settings --description "<one line>" --topics "<a,b,c>"` (add `--homebrew` for a standalone CLI that should publish to the tap).
-4. `mise run repo:labels` and `mise run repo:environments`. Name the `release` environment in each registry's trusted publisher config.
+4. `mise run repo:labels` and `mise run repo:environments`. Follow the publishing setup below.
 5. Choose the project license and review `CONTRIBUTING.md` as described below.
 6. Push a throwaway branch with a deliberate lint failure, open a PR, and confirm the annotation appears on the diff. Close it.
 7. `mise run repo:rulesets` after CI has reported on `main` at least once; it requires those check names on the default branch.
-8. `#user` If Homebrew is on: create `<owner>/homebrew-tap` if missing, create a fine-grained PAT with contents write on that repo, and store it as the `HOMEBREW_TAP_TOKEN` secret.
+8. `#user` If Homebrew is on: create `<owner>/homebrew-tap` if missing, create a fine-grained PAT with contents write on that repo, and store it as `HOMEBREW_TAP_TOKEN` in the `release` environment.
 9. `mise run release:rehearse`, then `#user` `mise run release`.
 
 CI jobs carry `if: !github.event.repository.is_template`, so they never run on the template repository itself. They also skip on any repository later flagged as a template.
+
+## Publishing environment
+
+Every publishing job uses `environment: release`, including GitHub asset uploads, Homebrew, and any registry publishing added by a language kit. Build-only jobs and manual build rehearsals do not use it. `repo:environments` configures a `v*` tag policy; review existing deployment policies and add required reviewers if desired. Keep publishing secrets in this environment.
+
+For registry trusted publishing, bind the exact owner/repository, publishing workflow filename, and `release` environment. Grant `id-token: write` only to jobs that exchange an OIDC token; GitHub uploads and the Homebrew PAT do not need it. An environment alone does not restrict identity to one workflow: cloud trust policies must also constrain the workflow claim (or a customized subject) supported by the provider. Match the repository's actual subject format, including immutable IDs where enabled. See [GitHub's OIDC reference](https://docs.github.com/en/actions/reference/security/oidc).
 
 ## License and community files
 

@@ -68,6 +68,7 @@ jobs:
 
   publish:
     name: Upload release assets
+    environment: release
     if: github.event_name == 'release'
     needs: build
     runs-on: ubuntu-24.04
@@ -88,6 +89,7 @@ jobs:
 
   homebrew:
     name: Publish Homebrew formula
+    environment: release
     if: github.event_name == 'release' && vars.HOMEBREW_TAP == 'true'
     needs: publish
     runs-on: ubuntu-24.04

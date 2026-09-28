@@ -1,2 +1,2 @@
 [global]
-disable = ["line-length", "no-inline-html", "no-duplicate-heading"]
+disable = ["line-length", "no-inline-html", "no-duplicate-heading", "no-inline-html"]

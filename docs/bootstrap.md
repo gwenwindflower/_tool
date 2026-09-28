@@ -51,7 +51,7 @@ In order. Steps marked `#user` need the account owner.
 1. `#user` `gh repo create <owner>/<name> --template gwenwindflower/_tool --public --clone`, then commit the filled placeholders and push `main`.
 2. `mise trust && mise install`, then `pinact run --update` and `mise run hooks:install`. The bootstrap writes `mise.local.toml` disabling every declared tool, because the core set is installed globally; delete lines for tools this machine lacks.
 3. `mise run repo:settings --description "<one line>" --topics "<a,b,c>"` (add `--homebrew` for a standalone CLI that should publish to the tap).
-4. `mise run repo:labels`.
+4. `mise run repo:labels` and `mise run repo:environments`. Name the `release` environment in each registry's trusted publisher config.
 5. `#user` Ensure `<owner>/.github` exists with `CONTRIBUTING.md` and `SECURITY.md`; the issue forms, PR template, and README link to them.
 6. Push a throwaway branch with a deliberate lint failure, open a PR, and confirm the annotation appears on the diff. Close it.
 7. `mise run repo:rulesets` after CI has reported on `main` at least once; it requires those check names on the default branch.

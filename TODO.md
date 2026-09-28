@@ -7,7 +7,7 @@
 ### Repository provisioning
 
 - [ ] #user Create the GitHub repository from the template and push `main`
-- [ ] Run `mise run repo:settings --description "..." --topics "..."` and `mise run repo:labels`
+- [ ] Run `mise run repo:settings --description "..." --topics "..."`, `mise run repo:labels`, and `mise run repo:environments`
 - [ ] #user Confirm CONTRIBUTING and SECURITY resolve from the owner's `.github` repository
 
 ### First green CI

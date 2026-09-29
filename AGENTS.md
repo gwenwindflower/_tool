@@ -12,6 +12,10 @@ Task scripts live in `mise-tasks/`, grouped into directories that become the `ve
 
 Prefer the language's conventions over the template's directory layout. Adapt build, packaging, and workflow artifact paths together; for Rust, package directly from `target/release` rather than copying binaries into `dist/bin`. Keep `dist/` where it is conventional or useful for release archives.
 
+## Shared task maintenance
+
+Treat `gwenwindflower/_tool` as the shared source of task-system improvements. When inherited task behavior changes, update its regression tests; contribute reusable fixes and useful generic tasks with their tests back to the template. Keep local tests for project-specific contracts or intentional divergences, not unchanged generic logic. During workflow maintenance or release preparation after a long gap, compare upstream task changes, adopt applicable fixes, and record intentional differences. See `docs/task-maintenance.md`.
+
 ## Releases are human-gated
 
 Never run `release`, `release:push`, or `release:create`. They push commits and create public GitHub releases behind mise `confirm` gates that default to no. `release:rehearse` is the dry run: it exercises every read-only step and prints the notes that would ship. Run it when the project looks ready, report what it says, and stop.

@@ -2,6 +2,8 @@
 
 Everything a new repository needs before its first release. Delete this file when the checklist is done; `AGENTS.md` links here until then.
 
+Remove `template/` and `.github/workflows/template.yml` from a repository created with GitHub's template button. The `project-workflows` bootstrap does this automatically. Shared task tests run in `_tool`; add project tests for the installed language kit and local contracts. See `docs/task-maintenance.md` for contributing improvements and reviewing upstream changes.
+
 ## Placeholders
 
 Markdown files use `{{NAME}}`. YAML, TOML, and scripts use `@@NAME@@` so the template itself stays parseable by zizmor, pinact, and tombi. Fill both forms.
@@ -60,7 +62,7 @@ In order. Steps marked `#user` need the account owner.
 8. `#user` If Homebrew is on: create `<owner>/homebrew-tap` if missing, create a fine-grained PAT with contents write on that repo, and store it as `HOMEBREW_TAP_TOKEN` in the `release` environment.
 9. `mise run release:rehearse`, then `#user` `mise run release`.
 
-CI jobs carry `if: !github.event.repository.is_template`, so they never run on the template repository itself. They also skip on any repository later flagged as a template.
+Application CI jobs carry `if: !github.event.repository.is_template`. The separate template workflow tests shared tasks on Linux and macOS only in `gwenwindflower/_tool`.
 
 ## Publishing environment
 

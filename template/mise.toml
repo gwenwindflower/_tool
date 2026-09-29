@@ -1,0 +1,15 @@
+[tasks.check]
+description = "Run the template maintenance gate"
+depends = ["test", "lint", "audit"]
+
+[tasks.test]
+description = "Test shared tasks without a language kit or GitHub writes"
+run = ["bash tests/versioning.sh", "bash tests/repo-labels.sh", "bash tests/repo-rulesets.sh", "bash tests/release-recovery.sh"]
+
+[tasks.lint]
+description = "Run the template's file checks"
+run = "mise -C .. run lint:hooks"
+
+[tasks.audit]
+description = "Audit template workflows and action pins"
+run = "mise -C .. run ci-audit"

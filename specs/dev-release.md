@@ -15,7 +15,7 @@ Every release is cut from a clean `main` by a human-gated pipeline that a contri
 - **dev-R007** — When a release is published, the build workflow attaches one `<name>-<target>-v<version>.tgz` per target triple, each with a `.sha256` sidecar.
 - **dev-R008** — Always: every `uses:` in `.github/workflows/` is pinned to a commit SHA with a trailing version comment, and `mise run ci-audit` passes.
 - **dev-R009** — Always: CI reports lint and test failures as file-and-line annotations on the diff.
-- **dev-R010** — While the repository is flagged as a template, CI jobs are skipped.
+- **dev-R010** — While the repository is flagged as a template, application CI jobs are skipped; the template's shared task suites run separately.
 - **dev-R011** — When the `HOMEBREW_TAP` repository variable is `true`, publishing a release rewrites the formula in the tap from the release's checksums.
 - **dev-R012** — Always: `mise run release:rehearse` runs every read-only step of the release and writes nothing.
 - **dev-R013** — Always: every commit passes the prek hooks on its staged files, and a subject git-cliff cannot parse is rejected at commit time.

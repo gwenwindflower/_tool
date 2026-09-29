@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 sandbox="$(mktemp -d "${TMPDIR:-/tmp}/versioning.XXXXXX")"
 trap 'rm -rf "$sandbox"' EXIT
 

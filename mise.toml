@@ -5,6 +5,7 @@ zizmor = "latest"
 shellcheck = "latest"
 prek = "latest"
 rumdl = "latest"
+jq = "latest"
 # >>> LANG_TOOLS <<<
 
 # >>> LANG_TASKS <<<
@@ -23,10 +24,6 @@ run = "prek install --hook-type pre-commit --hook-type commit-msg"
 description = "Run every check CI runs"
 alias = "c"
 depends = ["lint:*", "version:check", "test:*"]
-
-[tasks."test:versioning"]
-description = "Exercise the version tasks against sandbox repositories"
-run = "./tests/versioning.sh"
 
 [tasks."ci-audit:zizmor"]
 description = "Audit the GitHub Actions workflows for security issues"

@@ -11,8 +11,8 @@ Markdown files use `{{NAME}}`. YAML, TOML, and scripts use `@@NAME@@` so the tem
 | `TOOL_NAME` | Repository and package name (`heraldr`) |
 | `TOOL_BINARY` | Installed executable name; usually the same |
 | `GH_OWNER` | GitHub user or org that owns the repo and the Homebrew tap |
-| `AUTHOR` | Copyright holder in `LICENSE` |
-| `YEAR` | Copyright year in `LICENSE` |
+| `AUTHOR` | Copyright holder in the license notice |
+| `YEAR` | Copyright year in the license notice |
 | `LANGUAGE` | Named once in `AGENTS.md` |
 
 Prose placeholders (`{{ONE_LINE_TAGLINE}}`, `{{INSTALL_COMMANDS}}`, and the like) are filled by hand. Find what remains:
@@ -70,7 +70,17 @@ For registry trusted publishing, bind the exact owner/repository, publishing wor
 
 ## License and community files
 
-The template itself is unlicensed. For a generated project, rename `LICENSE-option1-apache` to `LICENSE` by default, or select `LICENSE-option2-fsl` only on request, then remove the unused option. Fill the copyright placeholders and align the README, package metadata, and `.github/homebrew/formula.rb.tmpl` with `Apache-2.0` or `FSL-1.1-ALv2`. FSL is source-available, with each version becoming available under Apache 2.0 after two years.
+The template itself is unlicensed. Pick one license for a generated project, rename or add its text as `LICENSE`, and remove the unused option files.
+
+| License | SPDX | Use for | Text |
+| --- | --- | --- | --- |
+| GNU GPL 3.0 | `GPL-3.0-or-later` | Default: CLIs, libraries, plugins, anything users run themselves | `LICENSE-option1-gpl` |
+| GNU AGPL 3.0 | `AGPL-3.0-or-later` | Open source software whose main use is as a network service, such as a hosted API or SaaS-style app | Not bundled; copy [gnu.org/licenses/agpl-3.0.txt](https://www.gnu.org/licenses/agpl-3.0.txt) verbatim |
+| Functional Source License 1.1 | `FSL-1.1-ALv2` | Only on request | `LICENSE-option2-fsl` |
+
+The GPL lets anyone use, sell, and modify the software, but anything they distribute from it must stay open under the same license. The AGPL extends that to people who only use a modified version over a network, which closes the hosting gap the GPL leaves open. FSL is source-available rather than open source, with each version becoming available under Apache 2.0 after two years.
+
+The GNU license texts stay verbatim, so the copyright notice lives in the README's License section: `Copyright (C) {{YEAR}} {{AUTHOR}}`, the license name, and the "or any later version" grant. FSL carries its notice in `LICENSE`; fill its placeholders there. Align the README, package metadata, and `.github/homebrew/formula.rb.tmpl` with the chosen SPDX identifier.
 
 Keep `CONTRIBUTING.md` for a self-contained project. It limits PRs to invited collaborators while welcoming requests to collaborate through Discussions. Add a security policy only when the project needs one.
 

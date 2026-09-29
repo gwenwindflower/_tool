@@ -62,4 +62,4 @@ Discussions are for ideas, questions, and "what if {{TOOL_NAME}} did X?". Issues
 
 ## License
 
-This template is unlicensed. Projects created from it must select a license: Apache 2.0 by default or FSL on request. Use the option files and [bootstrap instructions](docs/bootstrap.md#license-and-community-files); the option files do not license `_tool` itself.
+This template is unlicensed. Projects created from it must select a license: GPL 3.0 by default, AGPL 3.0 for network services, or FSL on request. Use the option files and [bootstrap instructions](docs/bootstrap.md#license-and-community-files); the option files do not license `_tool` itself.

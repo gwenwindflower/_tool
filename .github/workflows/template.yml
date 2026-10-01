@@ -62,4 +62,4 @@ jobs:
           cache: false
 
       - name: Check the task system
-        run: mise -C template run lint test
+        run: "mise -C template run lint ::: test"

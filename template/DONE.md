@@ -14,6 +14,8 @@ Application checks depend on the workflow audit; tests depend on checks. Templat
 
 `mise -C template run check` passed all four regression suites, file checks, offline zizmor, and the online pin verification. GitHub-hosted job skipping and authenticated zizmor remain to be verified in CI. Workflow wiring is validated with the existing checks rather than tests that assert YAML structure.
 
+The first PR run passed the online audit but exposed a task invocation error: mise interpreted `test` as an argument to `lint`. The workflow uses the `:::` task separator, quoted for YAML. The failing command was reproduced locally, and the corrected CI command passed file checks and all four regression suites; `ci-audit` also passed.
+
 ## Phase 1: Shared task regression coverage
 
 **Requirements**: R001, R002, R003, R004, R005

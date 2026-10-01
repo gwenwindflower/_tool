@@ -11,4 +11,17 @@ Before moving coverage upstream, run it against the generalized implementation a
 
 The template's maintenance suite runs with `mise -C template run check` and `.github/workflows/template.yml`. Bootstrap excludes `template/` and that workflow; GitHub's template button cannot exclude paths, so remove both during manual bootstrap. Generated projects run their own `test:*` tasks.
 
-Both CI workflows gate checks and tests on a separate online audit job. The template matrix runs only lint and tests after the audit succeeds; the local maintenance gate includes all three. Commit hooks run zizmor offline for checks that do not need GitHub access. Online audits need a writable cache.
+Both CI workflows gate checks and tests on a separate online audit job with a read-only GitHub token. Use `needs: audit` on checks and preserve the test job's dependency on checks, so an audit failure skips downstream work. Commit hooks run `zizmor --offline`; the dedicated audit job runs online checks, including known vulnerabilities.
+
+The template matrix runs `mise -C template run lint ::: test` after the audit succeeds; the local maintenance gate includes audits too. Multiple mise tasks require `:::` between invocations. Quote the command in YAML because the separator contains a colon followed by whitespace.
+
+Online zizmor audits write an HTTP cache. Restrict the TOML task to that directory:
+
+```toml
+[tasks."ci-audit:zizmor"]
+description = "Audit the GitHub Actions workflows for security issues"
+run = "zizmor ."
+allow_write = ["~/.cache/zizmor"]
+```
+
+`allow_write` restricts other writes without a separate `deny_write` setting. A bare `deny_write = true` blocks the cache and can make the vulnerability audit fail before producing findings. Mise applies this policy only when running the task; a direct `zizmor --format github .` CI step does not inherit it. Validate the exact CI command as well as the local gate, and verify online audits with a token: an offline pass does not exercise the cache.

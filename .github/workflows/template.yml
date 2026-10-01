@@ -16,9 +16,35 @@ env:
   MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}
 
 jobs:
+  audit:
+    name: Audit template workflows
+    if: ${{ github.repository == 'gwenwindflower/_tool' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install toolchain
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          cache: false
+
+      - name: Audit with zizmor
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: zizmor --format github .
+
+      - name: Verify action pins
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: mise run ci-audit:pinact
+
   tasks:
     name: Task system (${{ matrix.os }})
     if: ${{ github.repository == 'gwenwindflower/_tool' }}
+    needs: audit
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -36,6 +62,4 @@ jobs:
           cache: false
 
       - name: Check the task system
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: mise -C template run check
+        run: mise -C template run lint test

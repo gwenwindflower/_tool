@@ -10,3 +10,5 @@
 Before moving coverage upstream, run it against the generalized implementation and verify that the project still meets the same contract. Remove a local suite only after its shared behavior is covered upstream; retain assertions that depend on project-specific wiring. Tests use temporary fixtures and fake external commands, never live provisioning or publication.
 
 The template's maintenance suite runs with `mise -C template run check` and `.github/workflows/template.yml`. Bootstrap excludes `template/` and that workflow; GitHub's template button cannot exclude paths, so remove both during manual bootstrap. Generated projects run their own `test:*` tasks.
+
+Both CI workflows gate checks and tests on a separate online audit job. The template matrix runs only lint and tests after the audit succeeds; the local maintenance gate includes all three. Commit hooks run zizmor offline for checks that do not need GitHub access. Online audits need a writable cache.

@@ -1,5 +1,19 @@
 # Template maintenance ledger
 
+## Phase 2: Gate CI on workflow audits
+
+**Requirements**: R006, R007
+
+### Audit before checks and tests
+
+- [x] Gate application and template checks on dedicated audit jobs
+- [x] Allow online audit cache writes and make commit hooks explicitly offline
+- [x] Validate workflows and run the template maintenance gate
+
+Application checks depend on the workflow audit; tests depend on checks. Template maintenance runs one audit job before its Linux and macOS matrix, avoiding duplicate online audits. Commit hooks run offline, and the explicit audit task permits cache writes needed by online checks.
+
+`mise -C template run check` passed all four regression suites, file checks, offline zizmor, and the online pin verification. GitHub-hosted job skipping and authenticated zizmor remain to be verified in CI. Workflow wiring is validated with the existing checks rather than tests that assert YAML structure.
+
 ## Phase 1: Shared task regression coverage
 
 **Requirements**: R001, R002, R003, R004, R005

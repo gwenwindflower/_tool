@@ -28,7 +28,6 @@ depends = ["lint:*", "version:check", "test:*"]
 [tasks."ci-audit:zizmor"]
 description = "Audit the GitHub Actions workflows for security issues"
 run = "zizmor ."
-deny_write = true
 
 [tasks.ci-audit]
 description = "Run both workflow audits"

@@ -6,4 +6,4 @@ This directory belongs only to `gwenwindflower/_tool`. The bootstrap removes `te
 
 Use `template/SPEC.md`, `template/TODO.md`, and `template/DONE.md` for maintenance planning; the root planning files are project scaffolds. `mise -C template run check` includes tests, file checks, and workflow audits. Worktrunk selects this gate when `template/mise.toml` exists; generated projects use their application gate.
 
-CI runs online workflow audits in a separate prerequisite job. The task matrix runs `mise -C template run lint test` only after that job succeeds.
+CI runs online workflow audits in a separate prerequisite job. The task matrix runs `mise -C template run lint ::: test` only after that job succeeds.
